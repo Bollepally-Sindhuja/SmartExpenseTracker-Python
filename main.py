@@ -5,14 +5,12 @@ import matplotlib.pyplot as plt
 
 FILE_NAME = "expenses.csv"
 
-# Create CSV file if it doesn't exist
 def initialize_file():
     if not os.path.exists(FILE_NAME):
         with open(FILE_NAME, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["Date", "Category", "Amount", "Description"])
 
-# Add expense
 def add_expense():
     date = input("Enter date (YYYY-MM-DD): ")
     category = input("Enter category (Food/Travel/Bills/Shopping/Others): ")
@@ -24,8 +22,6 @@ def add_expense():
         writer.writerow([date, category, amount, description])
 
     print("Expense added successfully!")
-
-# View all expenses
 def view_expenses():
     with open(FILE_NAME, mode='r') as file:
         reader = csv.reader(file)
@@ -44,8 +40,6 @@ def view_expenses():
             print(f"{row[0]:<12} | {row[1]:<12} | {row[2]:<10} | {row[3]}")
 
         print("-" * 60)
-
-# Monthly summary
 def monthly_summary():
     month = input("Enter month (YYYY-MM): ")
     total = 0
@@ -58,8 +52,6 @@ def monthly_summary():
                 total += float(row["Amount"])
 
     print(f"\nTotal expenses for {month}: ₹{total:.2f}")
-
-# Category breakdown
 def category_breakdown():
     month = input("Enter month (YYYY-MM): ")
     categories = defaultdict(float)
@@ -82,8 +74,6 @@ def category_breakdown():
         print(f"{category:<15}: ₹{amount:.2f}")
 
     print("-" * 40)
-
-# Highest spending category
 def highest_spending_category():
     month = input("Enter month (YYYY-MM): ")
     categories = defaultdict(float)
@@ -103,8 +93,6 @@ def highest_spending_category():
     highest_amount = categories[highest_category]
 
     print(f"\nHighest spending category in {month}: {highest_category} (₹{highest_amount:.2f})")
-
-# Pie chart visualization
 def generate_pie_chart():
     month = input("Enter month (YYYY-MM): ")
     categories = defaultdict(float)
@@ -128,8 +116,6 @@ def generate_pie_chart():
     plt.title(f"Expense Distribution for {month}")
     plt.axis('equal')
     plt.show()
-
-# Smart insights / suggestions
 def smart_insights():
     month = input("Enter month (YYYY-MM): ")
     categories = defaultdict(float)
@@ -161,8 +147,6 @@ def smart_insights():
         print("Suggestion: Avoid impulse purchases and plan your shopping budget.")
     else:
         print("Suggestion: Monitor this category closely and try setting a monthly limit.")
-
-# Main menu
 def main():
     initialize_file()
 
