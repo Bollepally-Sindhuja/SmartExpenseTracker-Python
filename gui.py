@@ -7,18 +7,12 @@ import matplotlib.pyplot as plt
 
 FILE_NAME = "expenses.csv"
 
-# ----------------------------
-# Initialize CSV File
-# ----------------------------
+
 def initialize_file():
     if not os.path.exists(FILE_NAME):
         with open(FILE_NAME, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(["Date", "Category", "Amount", "Description"])
-
-# ----------------------------
-# Add Expense
-# ----------------------------
 def add_expense():
     date = date_entry.get().strip()
     category = category_combo.get().strip()
@@ -46,9 +40,6 @@ def add_expense():
     amount_entry.delete(0, tk.END)
     description_entry.delete(0, tk.END)
 
-# ----------------------------
-# View Expenses
-# ----------------------------
 def view_expenses():
     expense_window = tk.Toplevel(root)
     expense_window.title("All Expenses")
@@ -77,9 +68,6 @@ def view_expenses():
         for row in reader:
             tree.insert("", tk.END, values=row)
 
-# ----------------------------
-# Get Monthly Category Totals
-# ----------------------------
 def get_monthly_categories(month):
     categories = defaultdict(float)
 
@@ -91,9 +79,6 @@ def get_monthly_categories(month):
 
     return categories
 
-# ----------------------------
-# Monthly Summary
-# ----------------------------
 def monthly_summary():
     month = month_entry.get().strip()
 
@@ -117,9 +102,6 @@ def monthly_summary():
 
     messagebox.showinfo("Monthly Summary", f"Total expenses for {month}: ₹{total:.2f}")
 
-# ----------------------------
-# Category Breakdown
-# ----------------------------
 def category_breakdown():
     month = month_entry.get().strip()
     categories = get_monthly_categories(month)
@@ -155,9 +137,6 @@ def category_breakdown():
     for category, amount in categories.items():
         tree.insert("", tk.END, values=(category, f"{amount:.2f}"))
 
-# ----------------------------
-# Highest Spending Category
-# ----------------------------
 def highest_spending_category():
     month = month_entry.get().strip()
     categories = get_monthly_categories(month)
@@ -178,9 +157,6 @@ def highest_spending_category():
         f"Highest spending category in {month}:\n\n{highest_category} (₹{highest_amount:.2f})"
     )
 
-# ----------------------------
-# Pie Chart
-# ----------------------------
 def generate_pie_chart():
     month = month_entry.get().strip()
     categories = get_monthly_categories(month)
@@ -202,9 +178,6 @@ def generate_pie_chart():
     plt.axis('equal')
     plt.show()
 
-# ----------------------------
-# Smart Insights
-# ----------------------------
 def smart_insights():
     month = month_entry.get().strip()
     categories = get_monthly_categories(month)
@@ -235,9 +208,6 @@ def smart_insights():
 
     messagebox.showinfo("Smart Insights", insight)
 
-# ----------------------------
-# Monthly Expense Report
-# ----------------------------
 def monthly_expense_report():
     month = month_entry.get().strip()
 
@@ -331,9 +301,6 @@ def monthly_expense_report():
     )
     suggestion_label.pack(pady=10)
 
-# ----------------------------
-# Initialize App
-# ----------------------------
 initialize_file()
 
 root = tk.Tk()
@@ -342,9 +309,6 @@ root.geometry("700x760")
 root.config(bg="#eaf2f8")
 root.resizable(False, False)
 
-# ----------------------------
-# Title Section
-# ----------------------------
 title_label = tk.Label(
     root,
     text="Smart Expense Tracker",
@@ -363,9 +327,6 @@ subtitle_label = tk.Label(
 )
 subtitle_label.pack(pady=5)
 
-# ----------------------------
-# Input Frame
-# ----------------------------
 input_frame = tk.LabelFrame(root, text="Add New Expense", font=("Arial", 12, "bold"), padx=20, pady=15, bg="#ffffff")
 input_frame.pack(padx=20, pady=15, fill="x")
 
@@ -387,9 +348,6 @@ description_entry.grid(row=3, column=1, pady=8, padx=10)
 
 tk.Button(input_frame, text="Add Expense", width=20, command=add_expense).grid(row=4, column=0, columnspan=2, pady=15)
 
-# ----------------------------
-# Analysis Frame
-# ----------------------------
 analysis_frame = tk.LabelFrame(root, text="Monthly Analysis", font=("Arial", 12, "bold"), padx=20, pady=15, bg="#ffffff")
 analysis_frame.pack(padx=20, pady=10, fill="x")
 
@@ -397,7 +355,6 @@ tk.Label(analysis_frame, text="Enter Month (YYYY-MM):", bg="#ffffff", font=("Ari
 month_entry = tk.Entry(analysis_frame, width=30)
 month_entry.grid(row=0, column=1, pady=8, padx=10)
 
-# Buttons Grid
 tk.Button(analysis_frame, text="View Expenses", width=22, command=view_expenses).grid(row=1, column=0, pady=8, padx=10)
 tk.Button(analysis_frame, text="Monthly Summary", width=22, command=monthly_summary).grid(row=1, column=1, pady=8, padx=10)
 
@@ -409,7 +366,4 @@ tk.Button(analysis_frame, text="Smart Insights", width=22, command=smart_insight
 
 tk.Button(analysis_frame, text="Monthly Expense Report", width=46, command=monthly_expense_report).grid(row=4, column=0, columnspan=2, pady=15)
 
-# ----------------------------
-# Run App
-# ----------------------------
 root.mainloop()
